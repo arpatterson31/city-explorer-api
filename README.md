@@ -22,10 +22,10 @@ Building my own custom API server, which will provide data for the City Explorer
   - Actual time needed to complete: 8 minutes
 
 - Name of feature: Lab 07 Weather
-  - Estimate of time needed to complete: _____
-  - Start time: _____
-  - Finish time: _____
-  - Actual time needed to complete: _____
+  - Estimate of time needed to complete: 1 hr
+  - Start time: 2:15pm
+  - Finish time: 4:56pm
+  - Actual time needed to complete: 2 hrs 41 minutes
 
 - Name of feature: Lab 07 Errors
   - Estimate of time needed to complete: _____
@@ -35,3 +35,4 @@ Building my own custom API server, which will provide data for the City Explorer
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+- TA Kory Jackson helped me to finish up my constructor and api endpoint function
