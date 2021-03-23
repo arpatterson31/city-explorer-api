@@ -4,7 +4,9 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-const weatherData = require('./data/weather.json');
+
+const weather = require('./data/weather.json');
+const weatherArray = weather.data;
 
 
 const app = express();
@@ -17,9 +19,30 @@ app.get('/', function (request, response) {
 });
 
 // api endpoint that process at a get request for lat and lon
-app.get('/weather', (request, response) => {
-  response.send('add something here')
+app.get('/weather', function(request, response){
+  console.log(weather);
+  const latitude = weather.lat;
+  const longitude = weather.lon;
+  const city = weather.city_name;
+  const forecastArray = weatherArray.map(ele => {
+    return new Forecast(ele.datetime, ele.weather.description);
+  });
+
+  const cityData = {
+    latitude: latitude,
+    longitude: longitude,
+    city: city,
+    forecastArray: forecastArray
+  };
+
+  response.send(cityData);
 });
+
+// // function to handle error from any API call
+// app.get('*', (request, response) => {
+//   response.status(500).send('Internal Server Error');
+// });
+
 
 // constructor function for a Forecast - date and description
 class Forecast {
@@ -29,11 +52,6 @@ class Forecast {
   }
 }
 
-
-// function to handle error from any API call
-app.get('*', (request, response) => {
-  response.status(500).send('Internal Server Error');
-});
 
 // turns on the server
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
