@@ -4,44 +4,54 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-
-const weather = require('./data/weather.json');
-const weatherArray = weather.data;
-
+const superagent = require('superagent');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
-app.get('/', function (request, response) {
-  response.send('Hey girl, hey!');
-});
+// app.get('/', function (request, response) {
+//   response.send('Hey girl, hey!');
+// });
 
+// const weather = require('./data/weather.json');
+
+
+// const weatherArray = weather.data;
 // api endpoint that process at a get request for lat and lon
-app.get('/weather', function(request, response){
-  console.log(weather);
-  const latitude = weather.lat;
-  const longitude = weather.lon;
-  const city = weather.city_name;
-  const forecastArray = weatherArray.map(ele => {
-    return new Forecast(ele.datetime, ele.weather.description);
-  });
+app.get('/weather', getWeather);
 
-  const cityData = {
-    latitude: latitude,
-    longitude: longitude,
-    city: city,
-    forecastArray: forecastArray
+
+function getWeather (request, response){
+  const city = request.query.city;
+  // const lon = request.query.lon;
+
+  const url = 'http://api.weatherbit.io/v2.0/forecast/daily';
+  const query = {
+    city,
+    key: process.env.WEATHER_API_KEY
   };
 
-  response.send(cityData);
-});
+  superagent
+    .get(url)
+    .query(query)
+    .then(results => {
+      // const latitude = weather.lat;
+      // const longitude = weather.lon;
+      // const city = weather.city_name;
+      console.log(results.body);
+      const forecastArray = results.body.map(data => {
+        return new Forecast(data);
+      });
+      response.status.send(forecastArray);
+    })
+    .catch(error => {
+      console.log(error);
+      response.status(404).send('page not found');
+    });
+}
 
-// // function to handle error from any API call
-// app.get('*', (request, response) => {
-//   response.status(500).send('Internal Server Error');
-// });
 
 
 // constructor function for a Forecast - date and description
@@ -53,5 +63,9 @@ class Forecast {
 }
 
 
+// // function to handle error from any API call
+// app.get('*', (request, response) => {
+//   response.status(500).send('Internal Server Error');
+// });
 // turns on the server
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
