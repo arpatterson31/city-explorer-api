@@ -16,16 +16,14 @@ app.use(cors());
 // });
 
 // const weather = require('./data/weather.json');
-
-
 // const weatherArray = weather.data;
-// api endpoint that process at a get request for lat and lon
+
+// api endpoint
 app.get('/weather', getWeather);
 
 
 function getWeather (request, response){
   const city = request.query.city;
-  // const lon = request.query.lon;
 
   const url = 'http://api.weatherbit.io/v2.0/forecast/daily';
   const query = {
@@ -37,14 +35,13 @@ function getWeather (request, response){
     .get(url)
     .query(query)
     .then(results => {
-      // const latitude = weather.lat;
-      // const longitude = weather.lon;
-      // const city = weather.city_name;
-      console.log(results.body);
-      const forecastArray = results.body.map(data => {
-        return new Forecast(data);
+
+      const forecastArray = results.body.data.map(data => {
+        // console.log(data);
+        return new Forecast(data.datetime, data.weather.description);
       });
-      response.status.send(forecastArray);
+      // console.log(forecastArray);
+      response.status(200).send(forecastArray);
     })
     .catch(error => {
       console.log(error);
