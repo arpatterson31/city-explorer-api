@@ -1,8 +1,8 @@
 'use strict';
 
 // require statements
-const express = require('express');
 require('dotenv').config();
+const express = require('express');
 const cors = require('cors');
 const superagent = require('superagent');
 
@@ -19,25 +19,22 @@ app.use(cors());
 app.get('/weather', getWeather);
 
 function getWeather (request, response){
-  const city = request.query.city;
+  const { lat, lon } = request.query;
 
   const url = 'http://api.weatherbit.io/v2.0/forecast/daily';
   const query = {
-    city,
     key: process.env.WEATHER_API_KEY,
+    lat: lat,
+    lon: lon,
     days: 7
   };
 
   superagent
     .get(url)
     .query(query)
-    .then(results => {
-
-      const forecastArray = results.body.data.map(data => {
-        // console.log(data);
-        return new Forecast(data.datetime, data.weather.description);
-      });
-      // console.log(forecastArray);
+    .then(superagentResults => {
+      const results = superagentResults.body.data;
+      const forecastArray = results.map(day => new Forecast (day));
       response.status(200).send(forecastArray);
     })
     .catch(error => {
@@ -46,18 +43,16 @@ function getWeather (request, response){
     });
 }
 // constructor function for a Forecast - date and description
-class Forecast {
-  constructor(date, description) {
-    this.date = date;
-    this.description = description;
-  }
+function Forecast(obj) {
+  this.description = obj.weather.description;
+  this.date = obj.datetime;
 }
 
 // api movie endpoint
 // app.get('/movie', getMovie);
 
 // function getMovie (request, response){
-  
+
 //   const url = 'https://api.themoviedb.org/3/search/movie';
 //   const query = {
 //     city,
