@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 const getWeather = require('./modules/weather');
-const getMovies = require('./movie');
+const getMovies = require('./modules/movie');
 
 // routes
 app.get('/weather', getWeather);

@@ -1,5 +1,6 @@
 'use strict';
 
+
 const superagent = require('superagent');
 let cache = require('./cache.js');
 
@@ -14,8 +15,8 @@ function getWeather(latitude, longitude) {
     days: 7,
   };
 
-  if (cache[key] && (Date.now() - cache[key].timestamp < 50000)) {
-    console.log('Cache hit');
+  if (cache[key] && (Date.now() - cache[key].timestamp < 1.08e+7)) {
+    console.log('Cache hit', cache[key].data);
   } else {
     console.log('Cache miss');
     cache[key] = {};
@@ -35,8 +36,8 @@ function parseWeather(weatherData) {
       return new Weather(day);
     });
     return Promise.resolve(weatherSummaries);
-  } catch (error) {
-    return Promise.reject(error);
+  } catch (e) {
+    return Promise.reject(e);
   }
 }
 
