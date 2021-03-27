@@ -3,6 +3,16 @@
 const superagent = require('superagent');
 let cache = require('./cache.js');
 
+function weatherHandler(request, response) {
+  const { lat, lon } = request.query;
+  getWeather(lat, lon)
+    .then(summaries => response.send(summaries))
+    .catch((error) => {
+      console.error(error);
+      response.status(500).send('Sorry. Something went wrong!');
+    });
+}
+
 function getWeather(latitude, longitude) {
   const key = 'weather-' + latitude + longitude;
   const url = 'http://api.weatherbit.io/v2.0/forecast/daily';
@@ -47,4 +57,4 @@ class Weather {
   }
 }
 
-module.exports = getWeather;
+module.exports = weatherHandler;
