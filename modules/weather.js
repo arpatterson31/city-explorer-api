@@ -1,6 +1,5 @@
 'use strict';
 
-
 const superagent = require('superagent');
 let cache = require('./cache.js');
 
