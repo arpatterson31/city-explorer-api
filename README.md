@@ -20,6 +20,10 @@ Building my own custom API server, which will provide data for the City Explorer
 
 - [Lab 08 drawing](https://drive.google.com/file/d/1eARFvoUBCRmBAW8Zwy7v8kl12q7h8qvZ/view?usp=sharing)
 
+- Lab 10 Drawing
+
+![Lab 10 Drawing](./data/lab10wrr.png)
+
 ## Change Log
 
 - Name of feature: Lab 07 Setup
@@ -63,6 +67,12 @@ Building my own custom API server, which will provide data for the City Explorer
   - Start time: 9:00 pm
   - Finish time: 9:44 pm
   - Actual time needed to complete: 44 minutes
+
+- Name of feature: Lab 10 Performance
+  - Estimate of time needed to complete: 4 hours
+  - Start time: 8:00 pm
+  - Finish time: 11:40 pm
+  - Actual time needed to complete: 3hr 40 minutes
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
