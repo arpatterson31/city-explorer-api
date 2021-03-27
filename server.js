@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
-const getWeather = require('./weather');
+const getWeather = require('./modules/weather');
 const getMovies = require('./movie');
 
 // routes
